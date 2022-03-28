@@ -44,6 +44,28 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(0, sort.binary_search1(arr, 0, len(arr) - 1, -5))
         self.assertEqual(0, sort.binary_search2(arr, -5))
 
+    def test_merge_sort(self):
+        arr1 = get_random_arr()
+        arr2 = arr1.copy()
+        sort.merge_sort(arr1, 0, len(arr1) - 1)
+        arr2.sort()
+
+        self.assertEqual(arr2, arr1)
+
+        arr1 = get_random_arr()
+        arr2 = arr1.copy()
+        sort.merge_sort(arr1, 0, len(arr1) - 1)
+        arr2.sort()
+
+        self.assertEqual(arr2, arr1)
+
+        arr1 = get_random_arr()
+        arr2 = arr1.copy()
+        sort.merge_sort(arr1, 0, len(arr1) - 1)
+        arr2.sort()
+
+        self.assertEqual(arr2, arr1)
+
 
 if __name__ == '__main__':
     unittest.main()

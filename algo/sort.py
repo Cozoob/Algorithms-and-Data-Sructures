@@ -127,3 +127,63 @@ def binary_search2(arr: [int], number: int):
             left = middle + 1
 
     return -1
+
+
+def merge_sort(arr: [int], start: int, end: int):
+    """
+    Sorts the array of the numbers.
+
+    Stable: Yes.
+
+    Time: O(nlogn)
+
+    Space: O(n), but actually in Python in this implementation
+    it's more...
+
+    Algorithm uses the recursive approach.
+
+
+
+    :param arr: The array of numbers to sort.
+    :param start: The starting index.
+    :param end: The ending index.
+    :return: Nothing.
+    """
+
+    if start >= end:
+        return
+
+    middle = start + (end - start) // 2
+
+    merge_sort(arr, start, middle)
+    merge_sort(arr, middle + 1, end)
+
+    left_size = middle - start + 1
+    right_size = end - middle
+
+    left_arr = [0 for _ in range(left_size)]
+    right_arr = [0 for _ in range(right_size)]
+
+    for i in range(left_size):
+        left_arr[i] = arr[start + i]
+
+    for i in range(right_size):
+        right_arr[i] = arr[middle + 1 + i]
+
+    i, j = 0, 0
+
+    for k in range(start, end + 1):
+        if i >= left_size:
+            # The left array has ended.
+            arr[k] = right_arr[j]
+            j += 1
+        elif j >= right_size:
+            # The right array has ended.
+            arr[k] = left_arr[i]
+            i += 1
+        elif left_arr[i] <= right_arr[j]:
+            arr[k] = left_arr[i]
+            i += 1
+        else:
+            arr[k] = right_arr[j]
+            j += 1
