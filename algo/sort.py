@@ -71,10 +71,59 @@ def max_sub_sum2(arr: [int]):
 
     return result
 
-def merge_sort(arr: [int]):
+
+def binary_search1(arr: [int], left: int, right: int, number: int):
+    """
+    Finds the index of the number (element) in the sorted array.
+
+    Algorithm uses recursive approach.
+
+    Time: O(logn)
+
+    :param arr: The sorted array.
+    :param left: The starting index.
+    :param right: The ending index.
+    :param number: The element to find its index.
+    :return: The index of the number in array. If not found, returns -1.
     """
 
-    :param arr:
-    :return:
+    if left > right:
+        return -1
+
+    middle = left + (right - left) // 2
+
+    if arr[middle] == number:
+        return middle
+    elif arr[middle] < number:
+        return binary_search1(arr, middle + 1, right, number)
+    else:
+        # arr[middle] > number
+        return binary_search1(arr, left, middle - 1, number)
+
+
+def binary_search2(arr: [int], number: int):
     """
-    pass
+    Finds the index of the number (element) in the sorted array.
+
+    Algorithm uses iterative approach.
+
+    Time: O(logn)
+
+    :param arr: The sorted array.
+    :param number: The element to find its index.
+    :return: The index of the number in array. If not found, returns -1.
+    """
+    left, right = 0, len(arr)
+
+    while left <= right:
+        middle = left + (right - left) // 2
+
+        if arr[middle] == number:
+            return middle
+        elif arr[middle] > number:
+            right = middle - 1
+        else:
+            # arr[middle] < number
+            left = middle + 1
+
+    return -1
