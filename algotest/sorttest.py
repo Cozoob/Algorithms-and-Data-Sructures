@@ -88,6 +88,16 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(arr1, arr2)
 
+    def test_select(self):
+        for _ in range(5):
+            arr = get_random_arr()
+            k = randint(0, len(arr) - 1)
+            number = sort.select(arr, 0, len(arr) - 1, k)
+            arr.sort()
+
+            self.assertEqual(arr.index(number), k)
+
+
 
 if __name__ == '__main__':
     unittest.main()

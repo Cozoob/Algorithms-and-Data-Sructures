@@ -302,3 +302,34 @@ def bucket_sort(arr: list[float]):
         for i in range(len(bucket)):
             arr[idx] = bucket[i]
             idx += 1
+
+
+def select(arr: list[float], start: int, end: int, k: int) -> float:
+    """
+    Returns the number in the array that would be the k-th smallest number
+    in sorted array. We do not sort the array.
+
+    Algorithm uses a recursive approach.
+
+    Time: O(n)
+
+    :param arr: The array of the numbers.
+    :param start: The starting index.
+    :param end: The ending index.
+    :param position: The element of the array that would be
+    the k-th smallest number in sorted array.
+    Must be -1 < position < len(array)!
+    :return: The found number from the array. It can
+    return the wrong number if len(array) <= position!
+    """
+
+    if start == end:
+        return arr[end]
+
+    pivot = partition(arr, start, end)
+    if pivot == k:
+        return arr[pivot]
+    elif pivot > k:
+        return select(arr, start, pivot - 1, k)
+    else:
+        return select(arr, pivot + 1, end, k)
