@@ -4,7 +4,7 @@
 """
 
 
-def max_sub_sum1(arr: [int], start: int, end: int) -> int:
+def max_sub_sum1(arr: list[int], start: int, end: int) -> int:
     """
     Finds the maximum subsequence sum of given array.
     Algorithm uses recursive approach.
@@ -44,7 +44,7 @@ def max_sub_sum1(arr: [int], start: int, end: int) -> int:
     return max(result_left, result_right, span_left + span_right)
 
 
-def max_sub_sum2(arr: [int]):
+def max_sub_sum2(arr: list[int]) -> int:
     """
     Finds the maximum subsequence sum of given array.
     Sum the numbers from the start and remember the best result.
@@ -72,7 +72,7 @@ def max_sub_sum2(arr: [int]):
     return result
 
 
-def binary_search1(arr: [int], left: int, right: int, number: int):
+def binary_search1(arr: list[int], left: int, right: int, number: int) -> int:
     """
     Finds the index of the number (element) in the sorted array.
 
@@ -101,7 +101,7 @@ def binary_search1(arr: [int], left: int, right: int, number: int):
         return binary_search1(arr, left, middle - 1, number)
 
 
-def binary_search2(arr: [int], number: int):
+def binary_search2(arr: list[int], number: int) -> int:
     """
     Finds the index of the number (element) in the sorted array.
 
@@ -129,7 +129,7 @@ def binary_search2(arr: [int], number: int):
     return -1
 
 
-def merge_sort(arr: [int], start: int, end: int):
+def merge_sort(arr: list[int], start: int, end: int):
     """
     Sorts the array of the numbers.
 
@@ -141,8 +141,6 @@ def merge_sort(arr: [int], start: int, end: int):
     it's more...
 
     Algorithm uses the recursive approach.
-
-
 
     :param arr: The array of numbers to sort.
     :param start: The starting index.
@@ -187,3 +185,53 @@ def merge_sort(arr: [int], start: int, end: int):
         else:
             arr[k] = right_arr[j]
             j += 1
+
+
+def partition(arr: list[int], start: int, end: int) -> int:
+    """
+    Makes partition of the array. Function divide
+    array for two "subarrays" where first one
+    contains the elements smaller than pivot
+    and the second one vice versa. The pivot is between these
+    "subarrays" at the end. It returns the index of the pivot
+    after dividing.
+
+    The function is used in quick sort algorithm.
+
+    :param arr: The array of numbers to make partition.
+    :param start: The starting index.
+    :param end: The ending index.
+    :return: The index of the pivot after partitioning.
+    """
+    pivot = arr[end]
+    i = start
+
+    for j in range(start, end):
+        if arr[j] <= pivot:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+
+    arr[i], arr[end] = arr[end], arr[i]
+
+    return i
+
+
+def quick_sort(arr: list[int], start: int, end: int):
+    """
+    Sorts the array of the numbers.
+
+    Stable: Yes.
+
+    Time: O(nlogn) mostly, but can be worse: O(n^2)
+
+    Space: O(1) - don't count the given array.
+
+    :param arr: The array of numbers to sort.
+    :param start: The starting index.
+    :param end: The ending index.
+    :return: Nothing.
+    """
+    while start < end:
+        middle = partition(arr, start, end)
+        quick_sort(arr, start, middle - 1)
+        start = middle + 1
