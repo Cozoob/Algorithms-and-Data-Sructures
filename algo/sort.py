@@ -220,7 +220,7 @@ def quick_sort(arr: list[int], start: int, end: int):
     """
     Sorts the array of the numbers.
 
-    Stable: Yes.
+    Stable: No.
 
     Time: O(nlogn) mostly, but can be worse: O(n^2)
 
@@ -235,3 +235,36 @@ def quick_sort(arr: list[int], start: int, end: int):
         middle = partition(arr, start, end)
         quick_sort(arr, start, middle - 1)
         start = middle + 1
+
+
+def counting_sort(arr: list[int]):
+    """
+    Sorts the array of natural numbers, where
+    the largest number cannot be too big!
+
+    Stable: Yes.
+
+    Time: O(n + k), where n - amount of numbers, k - the largest number
+
+    Space: O(n + k), where n - amount of numbers, k - the largest number
+
+    :param arr: The array that contains only natural numbers.
+    :return: Nothing.
+    """
+    n = len(arr)
+    largest_number = max(arr)
+    counter = [0 for _ in range(largest_number + 1)]
+    tmp = [0 for _ in range(n)]
+
+    for i in range(n):
+        counter[arr[i]] += 1
+
+    for i in range(1, largest_number + 1):
+        counter[i] += counter[i - 1]
+
+    for i in range(n - 1, -1, -1):
+        counter[arr[i]] -= 1
+        tmp[counter[arr[i]]] = arr[i]
+
+    for i in range(n):
+        arr[i] = tmp[i]

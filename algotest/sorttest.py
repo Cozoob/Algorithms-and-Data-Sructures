@@ -5,8 +5,10 @@ from random import randint
 
 
 def get_random_arr():
-    return [randint(-30, 100) for _ in range(randint(4, 12))]
+    return [randint(-30, 100) for _ in range(randint(4, 40))]
 
+def get_random_arr_for_counting_sort():
+    return [randint(0, 20) for _ in range(randint(4, 40))]
 
 class MyTestCase(unittest.TestCase):
     def test_max_sub_sum(self):
@@ -58,6 +60,15 @@ class MyTestCase(unittest.TestCase):
             arr1 = get_random_arr()
             arr2 = arr1.copy()
             sort.quick_sort(arr1, 0, len(arr1) - 1)
+            arr2.sort()
+
+            self.assertEqual(arr1, arr2)
+
+    def test_counting_sort(self):
+        for _ in range(5):
+            arr1 = get_random_arr_for_counting_sort()
+            arr2 = arr1.copy()
+            sort.counting_sort(arr1)
             arr2.sort()
 
             self.assertEqual(arr1, arr2)
