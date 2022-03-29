@@ -4,7 +4,7 @@
 """
 
 
-def max_sub_sum1(arr: list[int], start: int, end: int) -> int:
+def max_sub_sum1(arr: list[float], start: int, end: int) -> float:
     """
     Finds the maximum subsequence sum of given array.
     Algorithm uses recursive approach.
@@ -24,7 +24,7 @@ def max_sub_sum1(arr: list[int], start: int, end: int) -> int:
 
     # if the sum is smaller than 0, ignore the sum.
     if size == 1:
-        return max(0, arr[start])
+        return arr[start] if arr[start] >= 0 else 0
 
     result_left = max_sub_sum1(arr, start, middle)
     result_right = max_sub_sum1(arr, middle + 1, end)
@@ -44,7 +44,7 @@ def max_sub_sum1(arr: list[int], start: int, end: int) -> int:
     return max(result_left, result_right, span_left + span_right)
 
 
-def max_sub_sum2(arr: list[int]) -> int:
+def max_sub_sum2(arr: list[float]) -> float:
     """
     Finds the maximum subsequence sum of given array.
     Sum the numbers from the start and remember the best result.
@@ -72,7 +72,7 @@ def max_sub_sum2(arr: list[int]) -> int:
     return result
 
 
-def binary_search1(arr: list[int], left: int, right: int, number: int) -> int:
+def binary_search1(arr: list[float], left: int, right: int, number: int) -> int:
     """
     Finds the index of the number (element) in the sorted array.
 
@@ -101,7 +101,7 @@ def binary_search1(arr: list[int], left: int, right: int, number: int) -> int:
         return binary_search1(arr, left, middle - 1, number)
 
 
-def binary_search2(arr: list[int], number: int) -> int:
+def binary_search2(arr: list[float], number: int) -> int:
     """
     Finds the index of the number (element) in the sorted array.
 
@@ -129,7 +129,7 @@ def binary_search2(arr: list[int], number: int) -> int:
     return -1
 
 
-def merge_sort(arr: list[int], start: int, end: int):
+def merge_sort(arr: list[float], start: int, end: int):
     """
     Sorts the array of the numbers.
 
@@ -159,8 +159,8 @@ def merge_sort(arr: list[int], start: int, end: int):
     left_size = middle - start + 1
     right_size = end - middle
 
-    left_arr = [0 for _ in range(left_size)]
-    right_arr = [0 for _ in range(right_size)]
+    left_arr = [0.0 for _ in range(left_size)]
+    right_arr = [0.0 for _ in range(right_size)]
 
     for i in range(left_size):
         left_arr[i] = arr[start + i]
@@ -187,7 +187,7 @@ def merge_sort(arr: list[int], start: int, end: int):
             j += 1
 
 
-def partition(arr: list[int], start: int, end: int) -> int:
+def partition(arr: list[float], start: int, end: int) -> int:
     """
     Makes partition of the array. Function divide
     array for two "subarrays" where first one
@@ -216,7 +216,7 @@ def partition(arr: list[int], start: int, end: int) -> int:
     return i
 
 
-def quick_sort(arr: list[int], start: int, end: int):
+def quick_sort(arr: list[float], start: int, end: int):
     """
     Sorts the array of the numbers.
 
@@ -268,3 +268,37 @@ def counting_sort(arr: list[int]):
 
     for i in range(n):
         arr[i] = tmp[i]
+
+
+def bucket_sort(arr: list[float]):
+    """
+    Sorts the array of the numbers that are uniform distributed.
+
+    Time: O(n) if there is uniform distribution, else: O(n^2)
+
+    Space: O(n)
+
+    :param arr: The array of the numbers that are uniform distributed.
+    :return: Nothing.
+    """
+    n = len(arr)
+    min_value = min(arr)
+    max_value = max(arr)
+    value_range = (max_value - min_value) / n
+    buckets = [[] for _ in range(n)]
+
+    for i in range(n):
+        ratio = (arr[i] - min_value) / value_range
+        diff = ratio - int(ratio)
+
+        if diff == 0 and arr[i] != min_value:
+            buckets[int(ratio) - 1].append(arr[i])
+        else:
+            buckets[int(ratio)].append(arr[i])
+
+    idx = 0
+    for bucket in buckets:
+        quick_sort(bucket, 0, len(bucket) - 1)
+        for i in range(len(bucket)):
+            arr[idx] = bucket[i]
+            idx += 1

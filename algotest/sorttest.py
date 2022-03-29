@@ -73,6 +73,21 @@ class MyTestCase(unittest.TestCase):
 
             self.assertEqual(arr1, arr2)
 
+    def test_bucket_sort(self):
+        arr1 = [9, 1, 4, 56, 23, 5, 1, 0, 23, 12, 7, -100, -23, 5]
+        arr2 = arr1.copy()
+        sort.bucket_sort(arr1)
+        arr2.sort()
+
+        self.assertEqual(arr1, arr2)
+
+        arr1 = [0.41, 0.42, 0.13, 0.07, 0.21, 0.91, 0.13, 0.37]
+        arr2 = arr1.copy()
+        sort.bucket_sort(arr1)
+        arr2.sort()
+
+        self.assertEqual(arr1, arr2)
+
 
 if __name__ == '__main__':
     unittest.main()
