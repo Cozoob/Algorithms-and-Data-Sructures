@@ -384,3 +384,124 @@ def radix_sort(arr: list[int]):
 
         digit_place *= 10
 
+
+# HEAP MAX
+def max_heapify(arr: list[float], n: int, i: int):
+    """
+    Repairs the "max" heap.
+
+    Time: O(logn)
+
+    :param arr: The array of the heap.
+    :param n: The last index to repair the heap.
+    :param i: The current repairing index.
+    :return: Nothing.
+    """
+    left = 2 * i + 1
+    right = 2 * i + 2
+    k = i
+
+    if left < n and arr[left] > arr[k]:
+        k = left
+
+    if right < n and arr[right] > arr[k]:
+        k = right
+
+    if k != i:
+        arr[i], arr[k] = arr[k], arr[i]
+        max_heapify(arr, n, k)
+
+
+def max_build_heap(arr: list[int]):
+    """
+    Builds the "max" heap in the array.
+
+    :param arr: The array to build heap in.
+    :return: Nothing.
+    """
+    n = len(arr)
+    parent = (n - 2) // 2
+    for i in range(parent, -1, -1):
+        max_heapify(arr, n, i)
+
+
+def max_heap_sort(arr: list[int]):
+    """
+    Sorts the array of the numbers in "max" (increasing sorted numbers) heap.
+
+    Stable: No.
+
+    Time: O(nlogn)
+
+    Space: O(n)
+
+    :param arr: The array (built heap) to sort.
+    :return: Nothing.
+    """
+    n = len(arr)
+    max_build_heap(arr)
+
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        max_heapify(arr, i, 0)
+
+
+# HEAP MIN
+def min_heapify(arr: list[float], n: int, i: int):
+    """
+        Repairs the "min" heap.
+
+        Time: O(logn)
+
+        :param arr: The array of the heap.
+        :param n: The last index to repair the heap.
+        :param i: The current repairing index.
+        :return: Nothing.
+        """
+    left = 2 * i + 1
+    right = 2 * i + 2
+    k = i
+
+    if left < n and arr[left] < arr[k]:
+        k = left
+
+    if right < n and arr[right] < arr[k]:
+        k = right
+
+    if k != i:
+        arr[i], arr[k] = arr[k], arr[i]
+        min_heapify(arr, n, k)
+
+
+def min_build_heap(arr: list[int]):
+    """
+        Builds the "max" heap in the array.
+
+        :param arr: The array to build heap in.
+        :return: Nothing.
+    """
+    n = len(arr)
+    parent = (n - 2) // 2
+    for i in range(parent, -1, -1):
+        min_heapify(arr, n, i)
+
+
+def min_heap_sort(arr: list[int]):
+    """
+       Sorts the array of the numbers in "min" (decreasing sorted numbers) heap.
+
+       Stable: No.
+
+       Time: O(nlogn)
+
+       Space: O(n)
+
+       :param arr: The array (built heap) to sort.
+       :return: Nothing.
+       """
+    n = len(arr)
+    min_build_heap(arr)
+
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        min_heapify(arr, i, 0)

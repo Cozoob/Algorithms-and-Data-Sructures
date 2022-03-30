@@ -98,7 +98,12 @@ class MyTestCase(unittest.TestCase):
             number = sort.select(arr, 0, len(arr) - 1, k)
             arr.sort()
 
+            while arr[k] == arr[k - 1] and k > 1:
+                k -= 1
+
             self.assertEqual(arr.index(number), k)
+
+
 
     def test_radix_sort(self):
         for _ in range(5):
@@ -109,6 +114,23 @@ class MyTestCase(unittest.TestCase):
 
             self.assertEqual(arr1, arr2)
 
+    def test_heap_sort(self):
+        for _ in range(5):
+            arr1 = get_random_arr()
+            arr2 = arr1.copy()
+            arr1.sort()
+            sort.max_heap_sort(arr2)
+
+            self.assertEqual(arr1, arr2)
+
+        for _ in range(5):
+            arr1 = get_random_arr()
+            arr2 = arr1.copy()
+            arr1.sort()
+            arr1.reverse()
+            sort.min_heap_sort(arr2)
+
+            self.assertEqual(arr1, arr2)
 
 if __name__ == '__main__':
     unittest.main()
