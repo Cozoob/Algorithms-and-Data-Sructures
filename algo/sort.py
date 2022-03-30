@@ -274,6 +274,8 @@ def bucket_sort(arr: list[float]):
     """
     Sorts the array of the numbers that are uniform distributed.
 
+    Stable: Yes.
+
     Time: O(n) if there is uniform distribution, else: O(n^2)
 
     Space: O(n)
@@ -333,3 +335,52 @@ def select(arr: list[float], start: int, end: int, k: int) -> float:
         return select(arr, start, pivot - 1, k)
     else:
         return select(arr, pivot + 1, end, k)
+
+
+def radix_sort(arr: list[int]):
+    """
+    Sorts the array of the positive integers.
+
+    The algorithm uses LSD (Least Significant Digit) implementation.
+
+    Stable: Yes.
+
+    Time: O(d(n + k)), where k - number of different digits,
+    d - number of the digits in keys, n - length of the array
+
+    Space: O(n + k)
+
+
+    :param arr: The array of the positive integers.
+    :return: Nothing.
+    """
+    n = len(arr)
+    biggest_number = 0
+
+    for i in range(n):
+        biggest_number = max(biggest_number, arr[i])
+
+    digit_place = 1
+
+    while biggest_number / digit_place > 0:
+        # it's counting sort but only for digits in number!
+        counter = [0 for _ in range(10)]
+        tmp = [0 for _ in range(n)]
+
+        for i in range(n):
+            idx = (arr[i] // digit_place) % 10
+            counter[idx] += 1
+
+        for i in range(1, 10):
+            counter[i] += counter[i - 1]
+
+        for i in range(n - 1, -1, -1):
+            idx = (arr[i] // digit_place) % 10
+            tmp[counter[idx] - 1] = arr[i]
+            counter[idx] -= 1
+
+        for i in range(n):
+            arr[i] = tmp[i]
+
+        digit_place *= 10
+

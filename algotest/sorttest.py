@@ -10,6 +10,9 @@ def get_random_arr():
 def get_random_arr_for_counting_sort():
     return [randint(0, 20) for _ in range(randint(4, 40))]
 
+def get_random_arr_for_radix_sort():
+    return [randint(0, 10000) for _ in range(randint(10, 40))]
+
 class MyTestCase(unittest.TestCase):
     def test_max_sub_sum(self):
         arr = [7, -10, 2, 5, 3, -1, 8, -100, 2]
@@ -97,6 +100,14 @@ class MyTestCase(unittest.TestCase):
 
             self.assertEqual(arr.index(number), k)
 
+    def test_radix_sort(self):
+        for _ in range(5):
+            arr1 = get_random_arr_for_radix_sort()
+            arr2 = arr1.copy()
+            arr1.sort()
+            sort.radix_sort(arr2)
+
+            self.assertEqual(arr1, arr2)
 
 
 if __name__ == '__main__':
